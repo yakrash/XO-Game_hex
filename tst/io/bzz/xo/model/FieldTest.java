@@ -1,5 +1,6 @@
 package io.bzz.xo.model;
 
+import io.bzz.xo.model.exceptions.AlreadyOccupiedException;
 import io.bzz.xo.model.exceptions.InvalidPointException;
 import org.junit.Test;
 
@@ -75,6 +76,19 @@ public class FieldTest {
             field.getFigure(inputPoint);
             fail();
         } catch (InvalidPointException e) {}
+
+    }
+
+    @Test
+    public void testSetFigureWhenAlreadyOccupied() throws Exception{
+        final Field field = new Field();
+        final Point inputPoint = new Point(0,0);
+        final Figure inputFigure = Figure.O;
+        field.setFigure(inputPoint, inputFigure);
+        try {
+            field.setFigure(inputPoint, inputFigure);
+            fail();
+        } catch (AlreadyOccupiedException e) {}
 
     }
 }
