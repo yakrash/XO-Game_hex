@@ -9,7 +9,7 @@ public class Field {
 
     private final static int FIELD_SIZE = 3;
     private static final int MIN_COORDINATE = 0;
-    private static final int MAX_COORDINATE = FIELD_SIZE;
+    private static final int MAX_COORDINATE = FIELD_SIZE-1;
     private final Figure [][] field = new Figure [FIELD_SIZE][FIELD_SIZE];
 
 
@@ -42,6 +42,6 @@ public class Field {
     }
 
     public boolean checkCoordinate (int coordinate) {
-        return coordinate >= MIN_COORDINATE && coordinate < MAX_COORDINATE;
+        return coordinate >= MIN_COORDINATE && coordinate <= MAX_COORDINATE;
     }
 }
