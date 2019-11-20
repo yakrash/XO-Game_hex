@@ -12,8 +12,7 @@ public class Field {
     private static final int MAX_COORDINATE = FIELD_SIZE-1;
     private final Figure [][] field = new Figure [FIELD_SIZE][FIELD_SIZE];
 
-
-    public int getSize() {
+   public int getSize() {
         return FIELD_SIZE;
     }
 
