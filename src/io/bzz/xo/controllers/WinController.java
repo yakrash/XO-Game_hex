@@ -8,11 +8,28 @@ import java.awt.*;
 
 public class WinController {
 
-    public Figure getWinner(Field field) throws InvalidPointException {
-        if (checkHoris(field) != null) return checkHoris(field);
-        if (checkVert(field) != null) return checkVert(field);
-        if (checkDiag1(field) != null) return checkDiag1(field);
-        if (checkDiag2(field) != null) return checkDiag2(field);
+    public Figure getWinner(Field field) {
+
+        try {
+            if (checkHoris(field) != null) return checkHoris(field);
+        } catch (InvalidPointException e) {
+            e.printStackTrace();
+        }
+        try {
+            if (checkVert(field) != null) return checkVert(field);
+        } catch (InvalidPointException e) {
+            e.printStackTrace();
+        }
+        try {
+            if (checkDiag1(field) != null) return checkDiag1(field);
+        } catch (InvalidPointException e) {
+            e.printStackTrace();
+        }
+        try {
+            if (checkDiag2(field) != null) return checkDiag2(field);
+        } catch (InvalidPointException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 

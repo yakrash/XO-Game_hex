@@ -1,13 +1,21 @@
 package io.bzz.xo.view;
 
+import io.bzz.xo.controllers.CurrentMoveController;
+import io.bzz.xo.controllers.MoveController;
+import io.bzz.xo.controllers.WinController;
 import io.bzz.xo.model.Field;
 import io.bzz.xo.model.Figure;
 import io.bzz.xo.model.Game;
+import io.bzz.xo.model.exceptions.AlreadyOccupiedException;
 import io.bzz.xo.model.exceptions.InvalidPointException;
 
 import java.awt.*;
+import java.util.Scanner;
 
 public class ConsoleView {
+    private final CurrentMoveController currentMoveController = new CurrentMoveController();
+    private final WinController winController = new WinController();
+    private final MoveController moveController = new MoveController();
 
     public void show(Game game) {
         final Field field = game.getField();
@@ -20,9 +28,40 @@ public class ConsoleView {
 
     }
 
-    public void move(Game game) {
+    public boolean move(Game game) {
+        final Field field = game.getField();
+        final Figure currentMove = currentMoveController.currentMove(field);
+        final Figure winner = winController.getWinner(field);
+        if (currentMove == null) {
+            if (winner == null) {
+                System.out.println("Ooh you both won");
+                return false;
+            }
+        }
+        if (winner != null) {
+            System.out.println("WINNER: " + winner);
+            return false;
+        } else {
+            System.out.println("Now go: " + currentMove);
+            try {
+                moveController.applyFigure(field, askPoint(), currentMove);
+            } catch (InvalidPointException | AlreadyOccupiedException e) {
+                //e.printStackTrace();
+                System.out.println("Invalid point--1--1-1");
+            }
+        }
 
+        return true;
+    }
 
+    private Point askPoint() {
+        return new Point(askCoordinate("X") - 1, askCoordinate("Y") - 1);
+    }
+
+    private int askCoordinate(final String coordinate) {
+        System.out.println("Please input " + coordinate);
+        final Scanner in = new Scanner(System.in);
+        return in.nextInt();
     }
 
     private void printLine(final Field field, final int x) {
@@ -34,7 +73,9 @@ public class ConsoleView {
                 e.printStackTrace();
                 throw new RuntimeException(e);
             }
-            System.out.print(figure != null ? figure : "   ");
+            System.out.print(" ");
+            System.out.print(figure != null ? figure : " ");
+            System.out.print(" ");
             if (y != field.getSize() - 1) System.out.print("|");
         }
         System.out.println();
