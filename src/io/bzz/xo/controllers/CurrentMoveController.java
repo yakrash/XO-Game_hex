@@ -16,6 +16,8 @@ public class CurrentMoveController {
                 if (field.getFigure(point) != null) count++;
             }
         }
+        if (count == field.getSize()*field.getSize())
+            return null;
         if (count % 2 == 0)
         return Figure.X;
         else return Figure.O;
