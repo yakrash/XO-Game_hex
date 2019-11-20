@@ -7,7 +7,7 @@ import io.bzz.xo.model.exceptions.InvalidPointException;
 
 import java.awt.*;
 
-public class moveController {
+public class MoveController {
 
     public void applyFigure(final Field field,
                             final Point point,
